@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KasirKu — Satu Struk dari Scan sampai Tutup Kas</title>
-<meta name="description" content="KasirKu: order QR tanpa aplikasi, POS + dapur satu struk, stok dan laporan per outlet. Pilot untuk resto Indonesia.">
+<title>KasirKu — Pesanan Masuk, Dapur Langsung Tahu</title>
+<meta name="description" content="KasirKu membantu restoran menerima pesanan lewat QR, meneruskannya ke kasir dan dapur, serta melihat penjualan tiap outlet. Kenali rencana pilot kami.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Karla:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -165,183 +165,183 @@ footer{border-top:var(--bd);padding:26px 0;font-size:12.5px;margin-top:56px;back
 <a class="skip" href="#main">Lewati ke isi</a>
 <div class="topbar"><div class="wrap">
 <span>KASIRKU · JAKARTA · IDR · ID/EN</span>
-<span class="live"><span><span class="dot"></span>DAPUR LIVE</span><span id="clock">--:--</span></span>
+<span class="live"><span><span class="dot"></span>CONTOH ALUR DAPUR</span><span id="clock">--:--</span></span>
 </div></div>
 <header class="nav"><div class="wrap nav-in">
-<a class="logo" href="#top" aria-label="KasirKu home"><u>K</u>KasirKu</a>
+<a class="logo" href="#top" aria-label="Beranda KasirKu"><u>K</u>KasirKu</a>
 <nav class="links" aria-label="Utama">
-<a href="#alur">Alur</a><a href="#peran">Peran</a><a href="#catatan">Catatan</a><a href="#harga">Harga</a><a href="#faq">FAQ</a>
+<a href="#alur">Cara kerja</a><a href="#peran">Untuk siapa</a><a href="#mode">Fitur</a><a href="#harga">Harga</a><a href="#faq">FAQ</a>
 </nav>
 <div class="nav-right">
 <button class="tbtn" id="themeBtn" type="button">mode: siang</button>
-<a class="btn sm" href="#pilot">Ikut pilot</a>
+<a class="btn sm" href="#pilot">Kenali pilot</a>
 </div>
 </div></header>
 
 <main id="main">
 <div class="wrap hero" id="top">
 <div>
-<span class="stamp">PILOT TERBUKA · 5–10 OUTLET · 4 MINGGU</span>
-<h1>Satu struk.<br><em>Dari scan sampai tutup kas.</em></h1>
-<p class="sub">Pelanggan <b>scan → pesan → bayar</b>, tanpa install aplikasi. Kru terima <b>satu tiket</b> di POS + dapur. Pemilik lihat <b>sales, stok, refund per outlet</b> — tanpa komisi marketplace di jalur sendiri.</p>
+<span class="stamp">RENCANA PILOT · 5–10 OUTLET · 4 MINGGU</span>
+<h1>Pesanan masuk.<br><em>Dapur langsung tahu.</em></h1>
+<p class="sub">Pelanggan cukup <b>pindai QR, pilih menu, lalu bayar</b> dari ponsel. Pesanan masuk ke kasir dan dapur tanpa ditulis ulang. Pemilik bisa memantau penjualan dan pembayaran tiap outlet di satu tempat.</p>
 <div class="cta-row">
-<a class="btn" href="#pilot">Mulai trial 14 hari</a>
-<a class="btn plain" href="#alur">Lihat cara kerja ↓</a>
+<a class="btn" href="#pilot">Tanya soal pilot</a>
+<a class="btn plain" href="#alur">Lihat cara kerjanya ↓</a>
 </div>
-<p class="fine">QR DINE-IN · TAKEAWAY · QRIS + TUNAI · TANPA APLIKASI</p>
+<p class="fine">PESAN DI MEJA · BAWA PULANG · QRIS + TUNAI · TANPA UNDUH APLIKASI</p>
 <div class="ledgerline">
-<div><b>≤90 dtk</b><span>MEDIAN PESAN</span></div>
-<div><b>&lt;3 dtk</b><span>ORDER → DAPUR P95</span></div>
-<div><b>99,5%</b><span>ORDER SUKSES</span></div>
-<div><b>Rp 0</b><span>KOMISI PLATFORM</span></div>
+<div><b>QR</b><span>PESAN DARI MEJA</span></div>
+<div><b>1 alur</b><span>KASIR KE DAPUR</span></div>
+<div><b>Per outlet</b><span>LAPORAN PENJUALAN</span></div>
+<div><b>Rp 0</b><span>RENCANA KOMISI PLATFORM*</span></div>
 </div>
-<p class="note-hand">↳ coba struk di kanan — klik +/−, total &amp; pajak ngikutin rumus PRD.</p>
+<p class="note-hand">↳ Coba tambah atau kurangi menu di contoh struk. Totalnya ikut berubah.</p>
 </div>
 <div class="mock">
-<div class="tape">✂ STRUK SIMULASI — GUNTING DI SINI</div>
+<div class="tape">CONTOH STRUK · BUKAN PESANAN SUNGGUHAN</div>
 <div class="ticket" role="group" aria-label="Simulasi struk interaktif">
-<div class="t-head"><span>MEJA A7 · QR SCAN</span><span>DINE-IN</span></div>
+<div class="t-head"><span>MEJA A7 · PESAN VIA QR</span><span>MAKAN DI TEMPAT</span></div>
 <div id="items"></div>
 <div class="t-tot">
 <div><span>Subtotal</span><span id="tSub">Rp 0</span></div>
 <div><span>Voucher <button class="tbtn" id="vbtn" type="button" style="padding:2px 8px">pakai −10rb</button></span><span id="tDisc">Rp 0</span></div>
-<div><span>Service 5%</span><span id="tSvc">Rp 0</span></div>
+<div><span>Biaya layanan 5%</span><span id="tSvc">Rp 0</span></div>
 <div><span>Pajak 10%</span><span id="tTax">Rp 0</span></div>
 <div class="grand"><span>TOTAL</span><span id="tTot">Rp 0</span></div>
 </div>
 <div class="t-foot">
-<div>Quote <span id="tQuote">10:00</span> · <span id="tState">belum dikirim</span></div>
-<button class="btn sm" id="sendBtn" type="button" style="margin-top:10px;width:100%">Kirim ke dapur (simulasi)</button>
-<span class="ok" id="sentOk" style="display:none">Terkirim ke dapur ✓ (simulasi — browser return ≠ lunas)</span>
+<div>Harga berlaku <span id="tQuote">10:00</span> · <span id="tState">belum dikirim</span></div>
+<button class="btn sm" id="sendBtn" type="button" style="margin-top:10px;width:100%">Lihat contoh pesanan masuk</button>
+<span class="ok" id="sentOk" style="display:none">Contoh: pesanan masuk ke daftar dapur. Belum ada pembayaran sungguhan.</span>
 </div>
 <div class="zig"></div>
 </div>
-<p class="mockcap">Rumus: service 5% dari (subtotal − diskon) · pajak 10% dari (belanja + service). Uang integer rupiah, tanpa float.</p>
+<p class="mockcap">Contoh hitungan saja: diskon, biaya layanan, dan pajak terlihat sebelum pelanggan membayar. Tarif tiap restoran bisa berbeda.</p>
 </div>
 </div>
 
-<div class="ticker" aria-hidden="true"><div id="tick">QR DINE-IN ✦ TAKEAWAY ✦ PICKUP ✦ QRIS ✦ TUNAI/EDC ✦ SHIFT KAS ✦ KITCHEN DISPLAY ✦ STOK ATOMIK ✦ REFUND TERLACAK ✦ QR DINE-IN ✦ TAKEAWAY ✦ PICKUP ✦ QRIS ✦ TUNAI/EDC ✦ SHIFT KAS ✦ KITCHEN DISPLAY ✦ STOK ATOMIK ✦ REFUND TERLACAK ✦&nbsp;</div></div>
+<div class="ticker" aria-hidden="true"><div id="tick">PESAN VIA QR ✦ BAWA PULANG ✦ AMBIL SENDIRI ✦ QRIS ✦ TUNAI ✦ KASIR ✦ DAPUR ✦ STOK MENU ✦ PENGEMBALIAN DANA ✦ PESAN VIA QR ✦ BAWA PULANG ✦ AMBIL SENDIRI ✦ QRIS ✦ TUNAI ✦ KASIR ✦ DAPUR ✦ STOK MENU ✦ PENGEMBALIAN DANA ✦&nbsp;</div></div>
 
 <section id="alur"><div class="wrap">
-<div class="kicker reveal">Alur / log dapur</div>
-<h2 class="reveal">Satu order, lima cap waktu.</h2>
-<p class="lead reveal">Bayar terverifikasi server dulu, baru dapur nyala. Order lunas tapi tak bisa dibuatkan → refund case, bukan diam.</p>
+<div class="kicker reveal">Cara kerja · contoh alur pesanan</div>
+<h2 class="reveal">Dari meja sampai makanan tersaji.</h2>
+<p class="lead reveal">Pelanggan tahu pesanannya sampai mana. Staf menerima pesanan setelah pembayaran dipastikan, bukan hanya setelah pelanggan kembali dari halaman bayar.</p>
 <div class="log reveal">
-<div class="logrow"><time>12:02:11</time><div><h3>Scan — Meja A7</h3><p>QR statis = identitas meja, bukan izin lihat riwayat. QR mati tak bisa bikin order baru.</p></div><span class="st">SCAN ✓</span></div>
-<div class="logrow"><time>12:03:40</time><div><h3>Bayar — QRIS</h3><p>Server kunci harga + tahan stok atomik. Browser balik ≠ lunas; tunggu callback provider.</p></div><span class="st">BAYAR ✓</span></div>
-<div class="logrow"><time>12:03:42</time><div><h3>Dapur — Stasiun grill</h3><p>Tiket routing per stasiun, timer jalan. Retry tak gandakan tiket; reconnect narik yang ketinggalan.</p></div><span class="st">MASAK …</span></div>
-<div class="logrow"><time>12:11:05</time><div><h3>Saji — pramusaji</h3><p>Dine-in selesai oleh staf, bukan oleh tracking pelanggan. Pay-later: saldo meja lunas saat tutup.</p></div><span class="st">SAJI ✓</span></div>
-<div class="logrow"><time>21:30:00</time><div><h3>Tutup — Shift B</h3><p>Kas dihitung vs ekspektasi. Selisih di atas ambang → review manajer + jejak audit.</p></div><span class="st">KLOP ✓</span></div>
+<div class="logrow"><time>12:02:11</time><div><h3>Pelanggan pindai QR</h3><p>Menu untuk meja A7 terbuka di ponsel. Kode QR tidak menampilkan pesanan tamu sebelumnya.</p></div><span class="st">MENU TERBUKA</span></div>
+<div class="logrow"><time>12:03:40</time><div><h3>Pelanggan bayar lewat QRIS</h3><p>Total biaya terlihat sebelum bayar. Pesanan diteruskan setelah pembayaran berhasil dikonfirmasi.</p></div><span class="st">LUNAS</span></div>
+<div class="logrow"><time>12:03:42</time><div><h3>Dapur menerima pesanan</h3><p>Menu dan catatan pelanggan muncul di layar dapur, tanpa perlu diketik lagi oleh kasir.</p></div><span class="st">DIMASAK</span></div>
+<div class="logrow"><time>12:11:05</time><div><h3>Staf mengantar makanan</h3><p>Status diperbarui saat makanan disajikan. Pelanggan bisa melihat perkembangan pesanannya.</p></div><span class="st">DISAJIKAN</span></div>
+<div class="logrow"><time>21:30:00</time><div><h3>Kasir menutup giliran kerja</h3><p>Uang tunai yang dihitung dibandingkan dengan transaksi hari itu. Selisih bisa ditelusuri.</p></div><span class="st">SELESAI</span></div>
 </div>
 </div></section>
 
 <section id="peran"><div class="wrap">
-<div class="kicker reveal">Peran / tiga sisi buku</div>
-<h2 class="reveal">Tiga meja, satu buku yang sama.</h2>
-<p class="lead reveal">Satu produk, satu model data — layar beda per tugas.</p>
+<div class="kicker reveal">Dibuat untuk seluruh tim</div>
+<h2 class="reveal">Semua tahu apa yang perlu dikerjakan.</h2>
+<p class="lead reveal">Pelanggan memesan, kru melayani, pemilik memantau. Informasinya tetap saling terhubung.</p>
 <div class="cols3">
-<div class="col reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h7v7h-7z"/></svg></div><span class="who">01 · PELANGGAN</span><h3>Scan, pesan, lacak.</h3><ul><li>Menu akurat + harga penuh sebelum bayar</li><li>Guest checkout, tanpa daftar wajib</li><li>Link tracking privat + struk HP</li><li>ID default, EN bila tersedia</li></ul></div>
-<div class="col reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h14v12H5zM8 20h8M9 16h6"/></svg></div><span class="who">02 · KRU</span><h3>Terima sekali, sajikan cepat.</h3><ul><li>Order web + POS satu antrean</li><li>Tiket dapur per stasiun + overdue</li><li>Kas, shift, dan struk tercetak</li><li>Tombol besar, status jelas saat ramai</li></ul></div>
-<div class="col reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></div><span class="who">03 · PEMILIK</span><h3>Semua outlet kelihatan.</h3><ul><li>Publish menu, pause outlet, atur pajak</li><li>Sales, tender, refund per hari-bisnis</li><li>Antrean eksepsi tak bisa terlewat</li><li>Peran per outlet, bukan tebak-tebakan</li></ul></div>
+<div class="col reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h7v7h-7z"/></svg></div><span class="who">01 · PELANGGAN</span><h3>Pesan dari ponsel.</h3><ul><li>Lihat menu dan total biaya sebelum bayar</li><li>Pesan tanpa harus membuat akun</li><li>Pantau pesanan lewat tautan pribadi</li><li>Simpan struk di ponsel</li></ul></div>
+<div class="col reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h14v12H5zM8 20h8M9 16h6"/></svg></div><span class="who">02 · STAF RESTORAN</span><h3>Pesanan tak perlu dicatat ulang.</h3><ul><li>Pesanan pelanggan dan kasir di satu daftar</li><li>Dapur melihat menu serta catatan khusus</li><li>Staf bisa memantau waktu tunggu</li><li>Kasir mencocokkan uang saat tutup giliran</li></ul></div>
+<div class="col reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></div><span class="who">03 · PEMILIK</span><h3>Lebih mudah memantau restoran.</h3><ul><li>Atur menu dan jam buka tiap outlet</li><li>Lihat penjualan serta pengembalian dana</li><li>Ketahui bila ada pembayaran yang perlu dicek</li><li>Berikan akses sesuai tugas staf</li></ul></div>
 </div>
 </div></section>
 
 <section id="mode"><div class="wrap">
-<div class="kicker reveal">Mode layanan / papan</div>
-<h2 class="reveal">Jujur soal scope: kini vs nanti.</h2>
-<p class="lead reveal">Pilot = satu siklus servis nyata. Yang belum siap tak dijual.</p>
+<div class="kicker reveal">Rencana fitur</div>
+<h2 class="reveal">Mulai dari yang dibutuhkan setiap hari.</h2>
+<p class="lead reveal">Pilot direncanakan fokus pada pesanan di meja dan bawa pulang. Fitur lainnya menyusul setelah siap.</p>
 <div class="board">
-<div class="panel reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7zM9 8V6a3 3 0 0 1 6 0v2"/></svg></div><span class="tag">PILOT · KINI</span><h3>QR dine-in + takeaway</h3><p>Payment-first default; pay-later opsional per meja dengan settlement staf. Order belum bayar tak pernah jadi tiket produksi.</p><ul><li>QR revocable per meja + sesi privat</li><li>Slot pickup langsung, ID ambil wajib</li><li>Kas + 1 provider (QRIS dulu)</li></ul></div>
-<div class="panel dark reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17h6l3-8h4"/></svg></div><span class="tag">RILIS PENUH · NANTI</span><h3>Delivery + reservasi + loyalty</h3><p>Kuartal berikut setelah P0 stabil. Alamat tervalidasi, fee dikunci sebelum bayar; kitchen-ready ≠ delivered.</p><ul><li>Slot terjadwal + kapasitas terkunci</li><li>Poin, voucher, segmen terverifikasi</li><li>Resep, purchasing, split bill</li></ul></div>
+<div class="panel reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7zM9 8V6a3 3 0 0 1 6 0v2"/></svg></div><span class="tag">RENCANA PILOT</span><h3>Pesan di meja dan bawa pulang</h3><p>Pelanggan bisa memesan lewat QR. Untuk makan di tempat, restoran dapat memilih pembayaran di awal atau di kasir.</p><ul><li>Kode QR meja bisa dinonaktifkan bila perlu</li><li>Pesanan ambil sendiri tersedia untuk waktu dekat</li><li>Pembayaran tunai dan QRIS melalui penyedia yang disetujui</li></ul></div>
+<div class="panel dark reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17h6l3-8h4"/></svg></div><span class="tag">RENCANA BERIKUTNYA</span><h3>Antar pesanan, reservasi, dan poin</h3><p>Pengantaran dan reservasi direncanakan setelah alur pesanan utama berjalan baik.</p><ul><li>Pilih jadwal ambil atau antar yang tersedia</li><li>Pelanggan terdaftar bisa mengumpulkan poin</li><li>Kelola bahan baku dan pembelian</li></ul></div>
 </div>
 </div></section>
 
 <section id="catatan"><div class="wrap">
-<div class="kicker reveal">Kebenaran / buku insiden</div>
-<h2 class="reveal">Kebenaran dulu, klaim belakangan.</h2>
-<p class="lead reveal">Target pilot, bukan janji. Tiap baris punya acceptance test. Order lunas yang kedaluwarsa muncul sebagai eksepsi — tak pernah hangus diam-diam.</p>
+<div class="kicker reveal">Saat ada kendala</div>
+<h2 class="reveal">Pesanan dan pembayaran tetap jelas.</h2>
+<p class="lead reveal">Ini cara kerja yang kami rencanakan untuk pilot, bukan hasil yang sudah dicapai. Staf perlu tahu apa yang terjadi ketika pembayaran atau pesanan bermasalah.</p>
 <table class="book reveal">
-<tr><th scope="col">Jaminan</th><th scope="col">Perilaku</th><th scope="col">Cap</th></tr>
-<tr><td>Tanpa order ganda</td><td>Idempotency key — retry habis timeout kembali ke order yang sama.</td><td><span class="stamp-ok">AMAN</span></td></tr>
-<tr><td>Tanpa tiket palsu</td><td>Browser return ≠ lunas. Dapur nyala hanya atas callback terverifikasi.</td><td><span class="stamp-ok">AMAN</span></td></tr>
-<tr><td>Tanpa oversell</td><td>Rebutan item terakhir: tepat satu reservasi menang; sisanya lihat koreksi jelas.</td><td><span class="stamp-ok">AMAN</span></td></tr>
-<tr><td>Tanpa uang hilang diam</td><td>Telat, ganda, gagal → antrean eksepsi + pemilik + riwayat.</td><td><span class="stamp-wait">AWASI</span></td></tr>
-<tr><td>Tanpa bocor tenant</td><td>Semua record terikat tenant; ID obok-obok → kosong.</td><td><span class="stamp-ok">AMAN</span></td></tr>
-<tr><td>Tanpa riwayat hilang</td><td>Snapshot harga/resep disimpan; refund putar uang, bukan makanan termakan.</td><td><span class="stamp-ok">AMAN</span></td></tr>
+<tr><th scope="col">Jika ini terjadi</th><th scope="col">Yang direncanakan</th><th scope="col">Status</th></tr>
+<tr><td>Tombol pesan ditekan dua kali</td><td>Sistem mengenali percobaan yang sama agar pesanan tidak tercatat dua kali.</td><td><span class="stamp-ok">DICEK</span></td></tr>
+<tr><td>Pembayaran belum pasti</td><td>Dapur menunggu konfirmasi pembayaran sebelum mulai menyiapkan pesanan.</td><td><span class="stamp-ok">DICEK</span></td></tr>
+<tr><td>Menu baru saja habis</td><td>Pelanggan diminta memilih menu lain sebelum pembayaran diproses.</td><td><span class="stamp-ok">DICEK</span></td></tr>
+<tr><td>Pembayaran atau refund bermasalah</td><td>Kasusnya terlihat oleh staf untuk ditindaklanjuti, bukan hilang dari daftar.</td><td><span class="stamp-wait">PERLU DITANGANI</span></td></tr>
+<tr><td>Staf mengelola beberapa outlet</td><td>Staf hanya melihat data outlet yang memang boleh mereka akses.</td><td><span class="stamp-ok">DICEK</span></td></tr>
+<tr><td>Pesanan lama diperiksa lagi</td><td>Harga saat pemesanan tetap tercatat meskipun harga menu sudah berubah.</td><td><span class="stamp-ok">DICEK</span></td></tr>
 </table>
 <div class="metrics">
-<div class="metric reveal"><b>80%</b><span>AKTIVASI 7 HARI</span></div>
-<div class="metric reveal"><b>60%</b><span>CHECKOUT SELESAI</span></div>
-<div class="metric reveal"><b>0</b><span>GANDA TAK SELESAI</span></div>
-<div class="metric reveal"><b>70%</b><span>OUTLET HARIAN</span></div>
-<div class="metric reveal"><b>0</b><span>VARIANSI KAS</span></div>
-<div class="metric reveal"><b>≥4,0</b><span>PUAS / 5</span></div>
+<div class="metric reveal"><b>80%</b><span>TARGET OUTLET AKTIF</span></div>
+<div class="metric reveal"><b>60%</b><span>TARGET PESANAN SELESAI</span></div>
+<div class="metric reveal"><b>0</b><span>TARGET MASALAH BAYAR TERBUKA</span></div>
+<div class="metric reveal"><b>70%</b><span>TARGET OUTLET MEMESAN HARIAN</span></div>
+<div class="metric reveal"><b>0</b><span>TARGET SELISIH KAS TAK TERJELASKAN</span></div>
+<div class="metric reveal"><b>≥4,0</b><span>TARGET KEPUASAN / 5</span></div>
 </div>
 </div></section>
 
 <section id="harga"><div class="wrap">
-<div class="kicker reveal">Harga / daftar</div>
-<h2 class="reveal">Per outlet, tanpa komisi.</h2>
-<p class="lead reveal">Harga test — divalidasi saat pilot. Fee gateway, pesan, kurir terpisah. Omzet tetap milik resto.</p>
+<div class="kicker reveal">Perkiraan harga</div>
+<h2 class="reveal">Pilih sesuai kebutuhan restoran.</h2>
+<p class="lead reveal">Harga berikut masih perkiraan untuk dibahas bersama calon peserta pilot, belum harga jual resmi. Biaya penyedia pembayaran, pesan, dan kurir dihitung terpisah.</p>
 <div class="pricelist reveal">
-<div class="prow hot"><div><h3>CORE · PILOT</h3><div class="idr">Rp 299rb</div><p>/outlet/bln</p></div><p>QR order, POS, dapur · kuantitas menu + sold-out · kas + 1 provider · laporan dasar.</p><a class="go" href="#pilot">Ikut pilot →</a></div>
-<div class="prow"><div><h3>OPERATIONS</h3><div class="idr">Rp 599rb</div><p>/outlet/bln · penuh</p></div><p>Semua Core + bahan, resep, purchasing · variansi stok + COGS · split bill, pindah meja.</p><a class="go" href="#pilot">Reservasi →</a></div>
-<div class="prow"><div><h3>GROWTH</h3><div class="idr">Rp 899rb</div><p>/outlet/bln · penuh</p></div><p>Semua Operations + loyalty, voucher, promo · reservasi + delivery · segmen + banding outlet.</p><a class="go" href="#pilot">Reservasi →</a></div>
-<div class="prow"><div><h3>ENTERPRISE</h3><div class="idr">Custom</div><p>quote discovery</p></div><p>Limit kontrak + API · central kitchen, transfer · SLA dinego · onboarding + training.</p><a class="go" href="#pilot">Ngobrol →</a></div>
+<div class="prow hot"><div><h3>CORE · RENCANA PILOT</h3><div class="idr">Rp 299rb</div><p>perkiraan / outlet / bulan</p></div><p>Pesan lewat QR, kasir, dapur, stok menu sederhana, dan laporan penjualan.</p><a class="go" href="#pilot">Tanya soal pilot →</a></div>
+<div class="prow"><div><h3>OPERATIONS · RENCANA</h3><div class="idr">Rp 599rb</div><p>perkiraan / outlet / bulan</p></div><p>Semua fitur Core, ditambah pengelolaan bahan baku, pembelian, dan biaya makanan.</p><a class="go" href="#pilot">Tanya rencana →</a></div>
+<div class="prow"><div><h3>GROWTH · RENCANA</h3><div class="idr">Rp 899rb</div><p>perkiraan / outlet / bulan</p></div><p>Semua fitur Operations, ditambah poin pelanggan, promo, reservasi, dan pengantaran.</p><a class="go" href="#pilot">Tanya rencana →</a></div>
+<div class="prow"><div><h3>ENTERPRISE · RENCANA</h3><div class="idr">Sesuai kebutuhan</div><p>dibahas bersama</p></div><p>Untuk kebutuhan banyak outlet, integrasi khusus, dan pendampingan tambahan.</p><a class="go" href="#pilot">Diskusi kebutuhan →</a></div>
 </div>
-<p class="fine reveal" style="margin-top:14px">Trial 14 hari · grace 7 hari · baca/ekspor 30 hari pasca-suspensi. Downgrade simpan record. Suspensi tak blokir refund order accepted.</p>
+<p class="fine reveal" style="margin-top:14px">Rencana uji coba 14 hari. Rincian paket, biaya, dan dukungan akan dijelaskan sebelum restoran memutuskan bergabung. *Biaya dari penyedia pembayaran, pesan, dan kurir tetap berlaku.</p>
 </div></section>
 
 <section id="pilot"><div class="wrap">
-<div class="kicker reveal" style="text-align:center">Pilot / formulir</div>
-<h2 class="reveal" style="text-align:center">4 minggu, order beneran.</h2>
-<p class="lead reveal" style="text-align:center;margin-inline:auto">Onboarding dipandu, impor menu, file cetak QR, training kru, support jam dagang.</p>
+<div class="kicker reveal" style="text-align:center">Kenali rencana pilot</div>
+<h2 class="reveal" style="text-align:center">Ceritakan kebutuhan restoran Anda.</h2>
+<p class="lead reveal" style="text-align:center;margin-inline:auto">Kami merencanakan pilot 4 minggu dengan panduan menyiapkan menu dan QR. Formulir di bawah masih contoh dan belum mengirim data.</p>
 <div class="form reveal">
 <div class="err-summary" id="errSummary" role="alert" tabindex="-1" aria-labelledby="errTitle">
 <h2 id="errTitle">Ada yang kurang</h2>
 <ul id="errList" style="margin-left:18px"></ul>
 </div>
 <form id="pilotForm" novalidate>
-<label for="name">NAMA KAMU</label>
+<label for="name">NAMA ANDA</label>
 <input id="name" name="name" required autocomplete="name" placeholder="Sinta" aria-describedby="name-error">
-<p class="fielderror" id="name-error">Isi nama kamu</p>
-<label for="resto">NAMA RESTO</label>
+<p class="fielderror" id="name-error">Masukkan nama Anda</p>
+<label for="resto">NAMA RESTORAN</label>
 <input id="resto" name="resto" required placeholder="Warung Sinta" aria-describedby="resto-error">
-<p class="fielderror" id="resto-error">Isi nama resto</p>
+<p class="fielderror" id="resto-error">Masukkan nama restoran</p>
 <label for="outlets">JUMLAH OUTLET</label>
 <select id="outlets" name="outlets"><option>1 outlet</option><option>2–5 outlet</option><option>6–20 outlet</option><option>20+ outlet</option></select>
 <label for="wa">WHATSAPP</label>
 <input id="wa" name="wa" required inputmode="tel" placeholder="0812…" aria-describedby="wa-error">
-<p class="fielderror" id="wa-error">No WA 9–16 digit angka</p>
-<button class="btn" type="submit" style="width:100%;margin-top:22px">Minta slot pilot</button>
-<div class="okmsg" id="okMsg" role="status">Tercatat (front-end saja). Backend belum disambung — dibalas 1 hari kerja usai gateway tersambung. <!-- ponytail: POST /api/pilot-requests when backend exists --></div>
+<p class="fielderror" id="wa-error">Masukkan nomor WhatsApp yang valid (9–16 digit)</p>
+<button class="btn" type="submit" style="width:100%;margin-top:22px">Coba isi formulir</button>
+<div class="okmsg" id="okMsg" role="status">Contoh formulir berhasil diisi. Data Anda belum dikirim atau disimpan; pendaftaran pilot belum dibuka melalui situs ini. <!-- ponytail: connect secure submission endpoint before inviting signups --></div>
 </form>
 </div>
 </div></section>
 
 <section id="faq"><div class="wrap">
-<div class="kicker reveal">FAQ / singkat</div>
-<h2 class="reveal">Jawaban pendek.</h2>
+<div class="kicker reveal">Pertanyaan umum</div>
+<h2 class="reveal">Yang sering ditanyakan.</h2>
 <div style="max-width:760px;margin-top:20px">
-<details class="reveal"><summary>Pelanggan install aplikasi?</summary><p>Tidak. Kamera HP scan QR → situs mobile bermerek. Daftar loyalty opsional belakangan, verifikasi no HP.</p></details>
-<details class="reveal"><summary>Pembayaran apa saat pilot?</summary><p>QRIS dulu via satu provider resmi, plus tunai/EDC yang dicatat kru. E-wallet &amp; VA lain setelah aktivasi.</p></details>
-<details class="reveal"><summary>Internet putus saat ramai?</summary><p>Online-first: staf lihat status offline jelas, tanpa sukses palsu. Fallback manual terdokumentasi; supervisor input transaksi manual berlabel.</p></details>
-<details class="reveal"><summary>Butuh hardware apa?</summary><p>Order: Android/iOS modern apa pun. Kasir: tablet/laptop + printer struk yang didukung (daftar saat pilot). Fallback cetak browser.</p></details>
-<details class="reveal"><summary>KasirKu ambil komisi per order?</summary><p>Tidak ada komisi platform di jalur sendiri. Langganan + biaya provider/pesan/kurir berlaku, tertulis terpisah.</p></details>
-<details class="reveal"><summary>Jam support?</summary><p>Jam staf mengikuti jam dagang outlet pilot. Tanpa klaim 24/7 tanpa kapasitas.</p></details>
+<details class="reveal"><summary>Apakah pelanggan harus mengunduh aplikasi?</summary><p>Tidak. Pelanggan cukup memindai QR dengan kamera ponsel untuk membuka menu restoran.</p></details>
+<details class="reveal"><summary>Bagaimana pelanggan membayar?</summary><p>QRIS direncanakan sebagai opsi pembayaran digital pertama, setelah akun restoran aktif di penyedia pembayaran. Staf juga bisa mencatat pembayaran tunai.</p></details>
+<details class="reveal"><summary>Bagaimana jika internet terputus?</summary><p>Staf akan diberi tahu saat sambungan terputus. Pesanan atau pembayaran tidak akan ditampilkan sebagai berhasil tanpa konfirmasi. Restoran perlu memakai prosedur manual sementara.</p></details>
+<details class="reveal"><summary>Perangkat apa yang dibutuhkan?</summary><p>Pelanggan bisa memesan lewat ponsel. Staf direncanakan memakai tablet atau laptop; daftar printer struk yang didukung akan diumumkan sebelum pilot.</p></details>
+<details class="reveal"><summary>Apakah ada komisi per pesanan?</summary><p>Rencana kami tidak mengenakan komisi platform untuk pesanan dari saluran restoran sendiri. Biaya langganan dan biaya penyedia pembayaran tetap terpisah.</p></details>
+<details class="reveal"><summary>Kapan bantuan tersedia?</summary><p>Jam bantuan akan ditentukan bersama restoran peserta sebelum pilot dimulai.</p></details>
 </div>
 </div></section>
 
 <div class="wrap"><div class="cta-final reveal">
-<h2>Punya jalur order sendiri.</h2>
-<p>Terbitkan menu minggu ini. Terima order beneran dalam 7 hari — atau beri tahu di mana onboarding gagal.</p>
-<a class="btn" href="#pilot">Mulai trial 14 hari</a>
+<h2>Siap menerima pesanan dengan lebih rapi?</h2>
+<p>Kenali rencana KasirKu dan lihat apakah alurnya cocok untuk restoran Anda.</p>
+<a class="btn" href="#pilot">Lihat rencana pilot</a>
 </div></div>
 </main>
 
 <footer><div class="wrap foot">
 <span><b>KasirKu</b> — kasir + order + dapur + stok.</span>
-<span>Indonesia · IDR · Pilot 2026</span>
+<span>Indonesia · IDR · Rencana pilot 2026</span>
 </div></footer>
 
 <script>
@@ -369,7 +369,7 @@ document.getElementById('tSub').textContent=fmt(sub);document.getElementById('tD
 document.getElementById('tSvc').textContent=fmt(svc);document.getElementById('tTax').textContent=fmt(tax);document.getElementById('tTot').textContent=fmt(tot)}
 function poke(){left=600;document.getElementById('sentOk').style.display='none';document.getElementById('tState').textContent='belum dikirim';render();startQ()}
 function fmtQ(s){var m=Math.floor(s/60),r=s%60;return (m<10?'0':'')+m+':'+(r<10?'0':'')+r}
-function startQ(){if(iv)clearInterval(iv);iv=setInterval(function(){left--;if(left<=0){clearInterval(iv);document.getElementById('tQuote').textContent='HABIS';document.getElementById('tQuote').className='expired';document.getElementById('tState').textContent='quote kedaluwarsa — ubah qty untuk hitung ulang';return}document.getElementById('tQuote').textContent=fmtQ(left)},1000)}
+function startQ(){if(iv)clearInterval(iv);iv=setInterval(function(){left--;if(left<=0){clearInterval(iv);document.getElementById('tQuote').textContent='HABIS';document.getElementById('tQuote').className='expired';document.getElementById('tState').textContent='harga perlu dihitung ulang — ubah jumlah menu';return}document.getElementById('tQuote').textContent=fmtQ(left)},1000)}
 document.getElementById('vbtn').addEventListener('click',function(){discOn=!discOn;this.textContent=discOn?'batalkan':'pakai −10rb';poke()});
 document.getElementById('sendBtn').addEventListener('click',function(){if(left<=0){poke();return}document.getElementById('tState').textContent='diterima · antrean dapur';document.getElementById('sentOk').style.display='inline-block'});
 render();startQ();
