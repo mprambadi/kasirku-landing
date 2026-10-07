@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KasirKu Order — Sistem Order Online Terhubung Kasir & Dapur</title>
+<meta name="description" content="KasirKu Order: pelanggan scan QR, pesan, bayar tanpa aplikasi. Order masuk ke POS dan dapur dalam satu struk. Tanpa komisi platform di jalur sendiri.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Karla:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--paper:#FAF4E6;--paper2:#F1E7D0;--card:#FFFDF6;--ink:#231610;--mut:#6E5B4B;
+--line:#E2D3B4;--red:#C22E1F;--green:#1C6B3A;--gold:#8A5E0C;
+--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--serif:"Fraunces",Georgia,serif;--sans:Karla,ui-sans-serif,system-ui,sans-serif;
+--bd:1.5px solid var(--ink);--hard:5px 5px 0 var(--ink);--r:12px;
+}
+[data-theme="dark"]{--paper:#171008;--paper2:#211710;--card:#221812;--ink:#F3E8D4;--mut:#B9A68D;--line:#41301F;--red:#F0664F;--green:#5fce8a;--gold:#E3B341;--hard:5px 5px 0 #000}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:16px/1.6 var(--sans);overflow-x:hidden;
+background-image:repeating-linear-gradient(0deg,transparent 0 31px,color-mix(in srgb,var(--line) 45%,transparent) 31px 32px)}
+h1,h2,.serif{font-family:var(--serif);line-height:1.05;letter-spacing:-.015em}
+.mono{font-family:var(--mono)}
+a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--red);color:#fff;padding:10px 16px;z-index:99}
+.skip:focus{left:0}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.topbar{border-bottom:var(--bd);background:var(--card);font-family:var(--mono);font-size:12px}
+.topbar .wrap{display:flex;gap:16px;align-items:center;min-height:38px;flex-wrap:wrap}
+.live{margin-left:auto;display:flex;gap:10px;align-items:center}
+.dot{width:9px;height:9px;border-radius:99px;background:#16A34A;display:inline-block;margin-right:6px}
+header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(10px);border-bottom:var(--bd)}
+.nav-in{display:flex;align-items:center;gap:20px;min-height:66px}
+.logo{font-family:var(--serif);font-weight:900;font-size:23px;text-decoration:none}
+.logo u{text-decoration:none;background:var(--red);color:#fff;padding:1px 9px;border-radius:7px;border:var(--bd);margin-right:8px;font-size:16px;font-family:var(--mono)}
+.links{display:flex;gap:20px;font-size:14px;font-weight:700}
+.links a{text-decoration:none;color:var(--mut)}.links a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.nav-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:#fff;font-weight:800;padding:13px 24px;border-radius:10px;text-decoration:none;border:var(--bd);cursor:pointer;font-size:15px;font-family:var(--sans);box-shadow:3px 3px 0 var(--ink);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(-1px,-2px);box-shadow:5px 6px 0 var(--ink)}
+.btn.plain{background:var(--card);color:var(--ink)}
+.btn.sm{padding:8px 16px;font-size:13.5px}
+.tbtn{background:var(--card);border:var(--bd);border-radius:99px;padding:7px 14px;font-weight:700;cursor:pointer;font-size:12.5px;font-family:var(--mono);color:var(--ink)}
+.crumbs{font-family:var(--mono);font-size:12px;color:var(--mut);padding:18px 0 0}
+.crumbs a{text-decoration:none}.crumbs a:hover{text-decoration:underline}
+/* hero */
+.hero{display:grid;grid-template-columns:7fr 5fr;gap:44px;padding:26px 0 52px;align-items:center}
+.stamp{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--red);border:2px solid var(--red);border-radius:6px;padding:6px 12px;transform:rotate(-2deg);background:color-mix(in srgb,var(--red) 7%,transparent)}
+h1{font-size:clamp(36px,5.2vw,60px);margin:18px 0 14px;font-weight:900}
+h1 em{font-style:italic;font-weight:400;border-bottom:6px solid color-mix(in srgb,var(--red) 55%,transparent)}
+.sub{color:var(--mut);font-size:17.5px;max-width:54ch;margin-bottom:22px}
+.sub b{color:var(--ink)}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.fine{font-family:var(--mono);font-size:12px;color:var(--mut)}
+.proof{display:flex;gap:24px;flex-wrap:wrap;margin-top:22px;border-top:var(--bd);padding-top:16px}
+.proof div b{font-family:var(--serif);font-size:24px;display:block}
+.proof div span{font-family:var(--mono);font-size:11.5px;color:var(--mut)}
+/* phone mock */
+.mock{position:relative}
+.phone{border:var(--bd);border-radius:28px;background:var(--card);box-shadow:var(--hard);overflow:hidden;transform:rotate(1.5deg);max-width:320px;margin-left:auto}
+.p-notch{height:26px;display:flex;justify-content:center;align-items:center;border-bottom:1px solid var(--line)}
+.p-notch i{font-style:normal;width:110px;height:16px;border:var(--bd);border-radius:99px;display:block}
+.p-body{padding:16px;font-family:var(--mono);font-size:12.5px}
+.p-item{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px dotted var(--line)}
+.p-item small{display:block;color:var(--mut);font-size:11px}
+.p-step{display:flex;gap:8px;margin:14px 0}
+.p-step span{flex:1;text-align:center;font-size:10.5px;font-weight:700;border:1.5px solid var(--ink);border-radius:8px;padding:6px 2px}
+.p-step span.done{background:var(--green);border-color:var(--green);color:#fff}
+.p-step span.now{background:var(--red);border-color:var(--red);color:#fff}
+.p-total{display:flex;justify-content:space-between;font-weight:700;font-size:15px;border-top:2px dashed var(--ink);padding-top:10px;margin-top:4px}
+.float{position:absolute;background:var(--card);border:var(--bd);border-radius:10px;padding:8px 14px;font-family:var(--mono);font-size:12px;font-weight:700;box-shadow:3px 3px 0 var(--ink)}
+.f1{top:-8px;left:6px;transform:rotate(-3deg)}.f2{bottom:-12px;right:8px;transform:rotate(2deg)}
+/* sections */
+section{padding:60px 0 6px;scroll-margin-top:90px}
+.kicker{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.kicker::before{content:"# "}
+h2{font-size:clamp(28px,3.6vw,42px);margin-bottom:10px;font-weight:900}
+.lead{color:var(--mut);max-width:68ch;margin-bottom:28px;font-size:16.5px}
+/* reason cards */
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{border:var(--bd);background:var(--card);border-radius:var(--r);box-shadow:4px 4px 0 var(--ink);padding:24px 20px;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translate(-1px,-3px);box-shadow:6px 7px 0 var(--red)}
+.card h3{font-size:16.5px;margin:12px 0 8px}
+.card p{font-size:14px;color:var(--mut)}
+.glyph{width:42px;height:42px;border:var(--bd);border-radius:11px;background:var(--paper);display:flex;align-items:center;justify-content:center;box-shadow:2px 2px 0 var(--ink)}
+.glyph svg{width:22px;height:22px;stroke:var(--red);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* feature rows */
+.feat{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;border:var(--bd);background:var(--card);border-radius:16px;box-shadow:var(--hard);padding:34px 30px;margin-bottom:22px}
+.feat:nth-child(odd) .f-copy{order:2}
+.feat:nth-child(odd) .f-vis{order:1}
+.f-copy .tag{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;border:1.5px solid var(--red);color:var(--red);border-radius:6px;padding:3px 9px}
+.f-copy h3{font-family:var(--serif);font-size:clamp(22px,2.6vw,30px);margin:12px 0 10px}
+.f-copy>p{color:var(--mut);font-size:15px;margin-bottom:14px}
+.check{list-style:none;font-size:14.5px}
+.check li{padding:8px 0 8px 30px;border-top:1px dotted var(--line);position:relative}
+.check li::before{content:"✓";position:absolute;left:4px;top:8px;width:20px;height:20px;border:1.5px solid var(--green);color:var(--green);border-radius:99px;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+/* visual mini panels */
+.mini{border:var(--bd);border-radius:12px;background:var(--paper);padding:20px;font-family:var(--mono);font-size:12.5px;box-shadow:inset 3px 3px 0 color-mix(in srgb,var(--line) 60%,transparent)}
+.mini .mrow{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dotted var(--line)}
+.mini .mrow:last-child{border:0}
+.mbar{height:10px;border:1.5px solid var(--ink);border-radius:99px;overflow:hidden;margin:8px 0}
+.mbar i{display:block;height:100%;background:var(--red);font-style:normal}
+.mpill{display:inline-block;border:1.5px solid var(--green);color:var(--green);border-radius:6px;padding:3px 10px;font-weight:700;font-size:11px}
+/* package band */
+.band{border:var(--bd);background:var(--ink);color:var(--paper);border-radius:18px;box-shadow:var(--hard);padding:44px 36px;display:grid;grid-template-columns:5fr 7fr;gap:32px;align-items:center}
+.band h2{color:var(--paper)}
+.band p{color:color-mix(in srgb,var(--paper) 75%,transparent);font-size:15px;margin-bottom:18px}
+.pkg{list-style:none;counter-reset:p;font-size:14.5px}
+.pkg li{counter-increment:p;padding:12px 0 12px 52px;border-top:1px solid color-mix(in srgb,var(--paper) 25%,transparent);position:relative}
+.pkg li::before{content:counter(p,decimal-leading-zero);position:absolute;left:0;top:12px;font-family:var(--mono);font-weight:700;color:var(--gold);border:1.5px solid var(--gold);border-radius:8px;padding:2px 8px;font-size:12px}
+/* siblings */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+/* faq */
+details{border:var(--bd);background:var(--card);border-radius:10px;padding:16px 20px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:800;font-size:15px}
+details p{color:var(--mut);font-size:14px;margin-top:8px}
+/* final cta */
+.cta-final{border:var(--bd);background:var(--red);color:#fff;border-radius:18px;padding:52px 32px;text-align:center;margin:64px 0 0;box-shadow:var(--hard)}
+.cta-final h2{font-size:clamp(30px,4vw,46px)}
+.cta-final p{margin:12px auto 24px;max-width:52ch;color:#FFE9E4}
+.cta-final .btn{background:#fff;color:var(--red);border-color:var(--ink)}
+footer{border-top:var(--bd);padding:26px 0;font-size:12.5px;margin-top:56px;background:var(--card);font-family:var(--mono);color:var(--mut)}
+.foot{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s,transform .55s}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:960px){.hero,.feat,.band{grid-template-columns:1fr}.feat:nth-child(odd) .f-copy,.feat:nth-child(odd) .f-vis{order:initial}.grid4,.grid3{grid-template-columns:1fr 1fr}.phone{margin:0 auto}.links{display:none}}
+@media(max-width:560px){.grid4,.grid3{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Lewati ke isi</a>
+<div class="topbar"><div class="wrap">
+<span>KASIRKU · JAKARTA · IDR · ID/EN</span>
+<span class="live"><span><span class="dot"></span>DAPUR LIVE</span><span id="clock">--:--</span></span>
+</div></div>
+<header class="nav"><div class="wrap nav-in">
+<a class="logo" href="index.html" aria-label="KasirKu home"><u>K</u>KasirKu</a>
+<nav class="links" aria-label="Utama">
+<a href="#alasan">Alasan</a><a href="#fitur">Fitur</a><a href="#paket">Paket</a><a href="#faq">FAQ</a>
+</nav>
+<div class="nav-right">
+<button class="tbtn" id="themeBtn" type="button">mode: siang</button>
+<a class="btn sm" href="#demo">Coba demo</a>
+</div>
+</div></header>
+
+<main id="main">
+<div class="wrap">
+<p class="crumbs"><a href="index.html">Produk</a> &gt; KasirKu Order</p>
+<div class="hero" id="top">
+<div>
+<span class="stamp">KASIRKU ORDER · TANPA APLIKASI</span>
+<h1>Pelanggan scan.<br><em>Dapur langsung jalan.</em></h1>
+<p class="sub">Sistem order online yang nyambung ke <b>kasir dan dapur dalam satu struk</b>. QR di meja, bayar QRIS, tiket routing per stasiun — <b>tanpa komisi platform</b> di jalur order sendiri.</p>
+<div class="cta-row">
+<a class="btn" href="#demo">Coba demo gratis</a>
+<a class="btn plain" href="#paket">Lihat isi paket ↓</a>
+</div>
+<p class="fine">QR STATIS MEJA · QR DINAMIS KASIR · QRIS + TUNAI · ID/EN</p>
+<div class="proof">
+<div><b>≤90 dtk</b><span>MEDIAN PESAN</span></div>
+<div><b>&lt;3 dtk</b><span>ORDER → DAPUR P95</span></div>
+<div><b>Rp 0</b><span>KOMISI ORDER</span></div>
+</div>
+</div>
+<div class="mock" aria-hidden="true">
+<div class="float f1">scan ✓ 12:02</div>
+<div class="phone">
+<div class="p-notch"><i></i></div>
+<div class="p-body">
+<div class="p-item"><span>Ayam Goreng ×2<small>+ sambal ijo</small></span><span>Rp 44rb</span></div>
+<div class="p-item"><span>Es Teh ×2<small>extra es</small></span><span>Rp 16rb</span></div>
+<div class="p-step"><span class="done">scan</span><span class="done">pilih</span><span class="now">bayar</span></div>
+<div class="p-total"><span>Total</span><span>Rp 69.450</span></div>
+</div>
+</div>
+<div class="float f2">dapur: grill · 2 mnt</div>
+</div>
+</div>
+</div>
+
+<section id="alasan"><div class="wrap">
+<div class="kicker reveal">Alasan utama</div>
+<h2 class="reveal">Kenapa order online sendiri.</h2>
+<p class="lead reveal">Antrean pendek, data milik resto, biaya jelas. Empat alasan resto beralih ke jalur order langsung.</p>
+<div class="grid4">
+<div class="card reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h7v7h-7z"/></svg></div><h3>Permudah pemesanan</h3><p>Scan QR di meja, pilih, bayar — tanpa antre di kasir saat jam ramai.</p></div>
+<div class="card reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></div><h3>Jaga omzet sendiri</h3><p>Tanpa komisi platform di jalur sendiri. Harga dan promo resto yang tentukan.</p></div>
+<div class="card reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5M16 4l5 5M21 4l-5 5"/></svg></div><h3>Kenal pelanggan</h3><p>Kontak struk dan loyalty opt-in tersimpan per tenant — dasar promo yang tepat.</p></div>
+<div class="card reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div><h3>Perluas jangkauan</h3><p>Link order disebar di sosmed, Google Review, dan WA — mode dine-in, takeaway, delivery.</p></div>
+</div>
+</div></section>
+
+<section id="fitur"><div class="wrap">
+<div class="kicker reveal">Fitur / cara kerja</div>
+<h2 class="reveal">Dari scan sampai saji.</h2>
+<p class="lead reveal">Tiga alur yang saling nyambung: pesan cepat, belanja terkerek, jangkauan melebar.</p>
+
+<div class="feat reveal">
+<div class="f-copy"><span class="tag">01 · PESAN</span><h3>Scan, pilih, bayar — dari meja.</h3><p>QR statis per meja untuk dine-in, QR dinamis dari kasir untuk bayar di tempat. Harga dikunci server sebelum bayar.</p>
+<ul class="check"><li>QR revocable — yang mati tak bisa bikin order</li><li>Guest checkout, tanpa install aplikasi</li><li>QRIS + tunai/EDC tercatat, struk HP</li></ul></div>
+<div class="f-vis"><div class="mini"><div class="mrow"><span>12:02 scan A7</span><span>✓</span></div><div class="mrow"><span>12:03 kunci harga</span><span>✓</span></div><div class="mrow"><span>12:03 QRIS terverifikasi</span><span>✓</span></div><div class="mrow"><span>12:03 tiket → grill</span><span class="mpill">DAPUR JALAN</span></div></div></div>
+</div>
+
+<div class="feat reveal">
+<div class="f-copy"><span class="tag">02 · BELANJA</span><h3>Saran yang bikin nambah.</h3><p>Add-on yang resto atur sendiri muncul saat checkout — difilter stok, tak pernah masuk keranjang otomatis.</p>
+<ul class="check"><li>Rekomendasi add-on manual per outlet</li><li>Voucher &amp; promo, batas server-side</li><li>Terhubung loyalty: poin per order lunas</li></ul></div>
+<div class="f-vis"><div class="mini"><div class="mrow"><span>add-on dilihat</span><span>38%</span></div><div class="mbar"><i style="width:38%"></i></div><div class="mrow"><span>add-on dibeli</span><span>12%</span></div><div class="mbar"><i style="width:12%"></i></div><div class="mrow"><span>voucher dipakai</span><span class="mpill">TERBATAS</span></div></div></div>
+</div>
+
+<div class="feat reveal">
+<div class="f-copy"><span class="tag">03 · JANGKAUAN</span><h3>Satu link, banyak pintu masuk.</h3><p>Mode dine-in, takeaway, pickup, delivery terjadwal, dan reservasi — link yang sama disebar ke mana pun.</p>
+<ul class="check"><li>Multi-mode: dine-in, takeaway, delivery</li><li>Kurir via adaptor resmi, kitchen-ready ≠ delivered</li><li>Bebas komisi — hemat vs marketplace</li></ul></div>
+<div class="f-vis"><div class="mini"><div class="mrow"><span>sosmed → order</span><span>✓</span></div><div class="mrow"><span>Google Review → order</span><span>✓</span></div><div class="mrow"><span>WA → order</span><span>✓</span></div><div class="mrow"><span>reservasi meja</span><span class="mpill">KAPASITAS</span></div></div></div>
+</div>
+</div></section>
+
+<section id="paket"><div class="wrap">
+<div class="band reveal">
+<div>
+<div class="kicker" style="color:var(--gold)">Paket / termasuk</div>
+<h2>Optimalkan pesan, maksimalkan jual.</h2>
+<p>Perluas jangkauan dan naikkan transaksi dengan KasirKu Order. Termasuk dalam paket:</p>
+<a class="btn" href="#demo">Dapatkan penawaran</a>
+</div>
+<ol class="pkg">
+<li>Sistem order online terhubung kasir, dapur, dan loyalty dalam satu struk.</li>
+<li>Pembayaran digital terverifikasi server + opsi tunai tercatat, refund terlacak.</li>
+<li>Dukungan penuh: onboarding, impor menu, file cetak QR, dan support jam dagang.</li>
+</ol>
+</div>
+</div></section>
+
+<section id="sibling"><div class="wrap">
+<div class="kicker reveal">Keluarga produk</div>
+<h2 class="reveal">Saling nyambung, satu data.</h2>
+<p class="lead reveal">Semua modul KasirKu berbagi satu model order — alur kerja efisien tanpa re-entry.</p>
+<div class="grid3">
+<div class="card reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16v10H4zM8 11h8"/></svg></div><h3>KasirKu Kasir</h3><p>POS web + meja: order staf, shift kas, struk, split bill.</p></div>
+<div class="card reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8l8-4 8 4v8l-8 4-8-4zM4 8l8 4 8-4M12 12v8"/></svg></div><h3>KasirKu Stok</h3><p>Bahan, resep, receiving, waste, dan transfer antar outlet.</p></div>
+<div class="card reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12l2 2 4-5"/></svg></div><h3>KasirKu Loyalty</h3><p>Membership terverifikasi, poin, voucher, dan segmen pelanggan.</p></div>
+</div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+<div class="kicker reveal">FAQ</div>
+<h2 class="reveal">Jawaban pendek.</h2>
+<div style="max-width:760px;margin-top:20px">
+<details class="reveal"><summary>Bisa upselling lewat KasirKu Order?</summary><p>Bisa. Add-on yang resto atur sendiri muncul saat checkout, difilter ketersediaan. Tak ada item yang masuk keranjang otomatis.</p></details>
+<details class="reveal"><summary>Pelanggan perlu install aplikasi?</summary><p>Tidak. Kamera HP scan QR → situs mobile bermerek resto. Daftar loyalty opsional belakangan.</p></details>
+<details class="reveal"><summary>Apa syarat aktivasi?</summary><p>Internet outlet stabil — idealnya jaringan kasir dipisah dari jaringan pelanggan. Akun pembayaran teraktivasi sebelum QRIS dibuka publik.</p></details>
+<details class="reveal"><summary>Bagaimana kalau internet putus?</summary><p>Online-first: staf lihat status offline jelas, tanpa sukses palsu. Fallback manual terdokumentasi; supervisor input transaksi berlabel.</p></details>
+<details class="reveal"><summary>Ada komisi per order?</summary><p>Tidak ada komisi platform di jalur sendiri. Langganan + biaya provider/pesan/kurir tertulis terpisah.</p></details>
+</div>
+</div></section>
+
+<section id="demo"><div class="wrap">
+<div class="cta-final reveal">
+<h2>Saatnya #BebasCemas kelola order.</h2>
+<p>Terbitkan menu minggu ini. Terima order beneran dalam 7 hari — atau beri tahu di mana onboarding gagal.</p>
+<div class="cta-row" style="justify-content:center"><a class="btn" href="index.html#pilot">Jadwalkan demo</a></div>
+</div>
+</div></section>
+</main>
+
+<footer><div class="wrap foot">
+<span><b>KasirKu</b> — kasir + order + dapur + stok.</span>
+<span>Indonesia · IDR · ID/EN</span>
+</div></footer>
+
+<script>
+var root=document.documentElement,tb=document.getElementById('themeBtn');
+function setT(t){root.setAttribute('data-theme',t);tb.textContent=t==='dark'?'mode: malam':'mode: siang';try{localStorage.setItem('kk-theme',t)}catch(e){}}
+tb.addEventListener('click',function(){setT(root.getAttribute('data-theme')==='dark'?'light':'dark')});
+try{var s=localStorage.getItem('kk-theme');if(s)setT(s);else if(matchMedia('(prefers-color-scheme: dark)').matches)setT('dark')}catch(e){}
+function tickClock(){var d=new Date(),p=function(n){return(n<10?'0':'')+n};var el=document.getElementById('clock');if(el)el.textContent=p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())}
+tickClock();setInterval(tickClock,1000);
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!reduce&&'IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.12});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})}
+else{document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')})}
+</script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KasirKu — Satu Struk dari Scan sampai Tutup Kas</title>
+<meta name="description" content="KasirKu: order QR tanpa aplikasi, POS + dapur satu struk, stok dan laporan per outlet. Pilot untuk resto Indonesia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Karla:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--paper:#FAF4E6;--paper2:#F1E7D0;--card:#FFFDF6;--ink:#231610;--mut:#6E5B4B;
+--line:#E2D3B4;--red:#C22E1F;--green:#1C6B3A;--gold:#8A5E0C;
+--mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+--serif:"Fraunces",Georgia,serif;--sans:Karla,ui-sans-serif,system-ui,sans-serif;
+--bd:1.5px solid var(--ink);--hard:5px 5px 0 var(--ink);--r:12px;
+}
+[data-theme="dark"]{--paper:#171008;--paper2:#211710;--card:#221812;--ink:#F3E8D4;--mut:#B9A68D;--line:#41301F;--red:#F0664F;--green:#5fce8a;--gold:#E3B341;--hard:5px 5px 0 #000}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font:16px/1.6 var(--sans);overflow-x:hidden;
+background-image:repeating-linear-gradient(0deg,transparent 0 31px,color-mix(in srgb,var(--line) 45%,transparent) 31px 32px)}
+h1,h2,.serif{font-family:var(--serif);line-height:1.02;letter-spacing:-.015em}
+.mono{font-family:var(--mono)}
+a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+.skip{position:absolute;left:-9999px;top:0;background:var(--red);color:#fff;padding:10px 16px;z-index:99}
+.skip:focus{left:0}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.topbar{border-bottom:var(--bd);background:var(--card);font-family:var(--mono);font-size:12px}
+.topbar .wrap{display:flex;gap:16px;align-items:center;min-height:38px;flex-wrap:wrap}
+.live{margin-left:auto;display:flex;gap:10px;align-items:center}
+.dot{width:9px;height:9px;border-radius:99px;background:#16A34A;display:inline-block;margin-right:6px}
+header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(10px);border-bottom:var(--bd)}
+.nav-in{display:flex;align-items:center;gap:20px;min-height:66px}
+.logo{font-family:var(--serif);font-weight:900;font-size:23px;text-decoration:none}
+.logo u{text-decoration:none;background:var(--red);color:#fff;padding:1px 9px;border-radius:7px;border:var(--bd);margin-right:8px;font-size:16px;font-family:var(--mono)}
+.links{display:flex;gap:20px;font-size:14px;font-weight:700}
+.links a{text-decoration:none;color:var(--mut)}.links a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.nav-right{margin-left:auto;display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:#fff;font-weight:800;padding:13px 24px;border-radius:10px;text-decoration:none;border:var(--bd);cursor:pointer;font-size:15px;font-family:var(--sans);box-shadow:3px 3px 0 var(--ink);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(-1px,-2px);box-shadow:5px 6px 0 var(--ink)}
+.btn.plain{background:var(--card);color:var(--ink)}
+.btn.sm{padding:8px 16px;font-size:13.5px}
+.tbtn{background:var(--card);border:var(--bd);border-radius:99px;padding:7px 14px;font-weight:700;cursor:pointer;font-size:12.5px;font-family:var(--mono);color:var(--ink)}
+/* hero: asymmetric ledger */
+.hero{display:grid;grid-template-columns:7fr 5fr;gap:40px;padding:52px 0 44px;align-items:start}
+.stamp{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--red);border:2px solid var(--red);border-radius:6px;padding:6px 12px;transform:rotate(-2deg);background:color-mix(in srgb,var(--red) 7%,transparent)}
+h1{font-size:clamp(38px,5.6vw,66px);margin:18px 0 14px;font-weight:900}
+h1 em{font-style:italic;font-weight:400;border-bottom:6px solid color-mix(in srgb,var(--red) 55%,transparent)}
+.sub{color:var(--mut);font-size:17.5px;max-width:56ch;margin-bottom:22px}
+.sub b{color:var(--ink)}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.fine{font-family:var(--mono);font-size:12px;color:var(--mut)}
+.ledgerline{display:flex;gap:26px;flex-wrap:wrap;margin-top:22px;border-top:var(--bd);padding-top:16px}
+.ledgerline div b{font-family:var(--serif);font-size:24px;display:block}
+.ledgerline div span{font-family:var(--mono);font-size:11.5px;color:var(--mut)}
+.note-hand{font-family:var(--serif);font-style:italic;color:var(--red);font-size:16px;margin-top:14px}
+/* receipt widget */
+.mock{position:relative;padding-top:26px}
+.tape{position:absolute;top:8px;left:50%;transform:translateX(-50%) rotate(-3deg);background:color-mix(in srgb,var(--gold) 30%,var(--paper2));border-left:1px dashed var(--mut);border-right:1px dashed var(--mut);font-family:var(--mono);font-size:11px;padding:5px 18px;z-index:2}
+.ticket{background:var(--card);border:var(--bd);box-shadow:var(--hard);border-radius:4px;transform:rotate(1.2deg);font-family:var(--mono);overflow:hidden}
+.t-head{padding:14px 18px;border-bottom:2px dashed var(--ink);font-size:12px;font-weight:700;display:flex;justify-content:space-between;gap:10px}
+.t-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 18px;font-size:13.5px;border-bottom:1px dotted var(--line)}
+.t-row small{display:block;color:var(--mut);font-size:11.5px}
+.stepper{display:flex;align-items:center;gap:8px}
+.stepper button{width:26px;height:26px;border:var(--bd);background:var(--paper);border-radius:7px;font-weight:700;cursor:pointer;color:var(--ink);font-family:var(--mono);line-height:1}
+.stepper button:hover{background:var(--ink);color:var(--paper)}
+.t-tot{padding:12px 18px;font-size:13px}
+.t-tot div{display:flex;justify-content:space-between;padding:2px 0}
+.t-tot .grand{font-size:17px;font-weight:700;border-top:2px dashed var(--ink);margin-top:8px;padding-top:8px}
+.t-foot{padding:12px 18px 16px;font-size:12px}
+.t-foot .ok{display:inline-block;border:2px solid var(--green);color:var(--green);border-radius:6px;padding:4px 10px;font-weight:700;margin-top:8px}
+.expired{color:var(--red);font-weight:700}
+.zig{height:12px;background:radial-gradient(circle at 8px 0,var(--card) 8px,transparent 8.5px);background-size:16px 12px;background-repeat:repeat-x;transform:rotate(180deg);border-top:var(--bd)}
+.mockcap{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:14px;transform:rotate(1.2deg)}
+/* ticker */
+.ticker{border-top:var(--bd);border-bottom:var(--bd);background:var(--ink);color:var(--paper);overflow:hidden;white-space:nowrap;font-family:var(--mono);font-size:13px;font-weight:700}
+.ticker div{display:inline-block;padding:11px 0;animation:tick 28s linear infinite}
+@keyframes tick{to{transform:translateX(-50%)}}
+/* sections */
+section{padding:64px 0 6px;scroll-margin-top:90px}
+.kicker{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.kicker::before{content:"# "}
+h2{font-size:clamp(28px,3.6vw,42px);margin-bottom:10px;font-weight:900}
+.lead{color:var(--mut);max-width:68ch;margin-bottom:28px;font-size:16.5px}
+/* journey log */
+.log{border:var(--bd);background:var(--card);box-shadow:var(--hard);border-radius:var(--r);overflow:hidden}
+.logrow{display:grid;grid-template-columns:110px 1fr auto;gap:16px;padding:15px 20px;border-bottom:1px solid var(--line);align-items:baseline}
+.logrow:last-child{border:0}
+.logrow time{font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--red)}
+.logrow h3{font-size:16px;margin-bottom:2px}
+.logrow p{font-size:14px;color:var(--mut)}
+.logrow .st{font-family:var(--mono);font-size:11px;font-weight:700;border:1.5px solid var(--ink);border-radius:99px;padding:3px 10px;white-space:nowrap}
+/* 3 columns ledger */
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.col{border:var(--bd);background:var(--card);border-radius:var(--r);box-shadow:4px 4px 0 var(--ink);padding:24px 22px}
+.col:nth-child(2){transform:translateY(14px)}
+.col .who{font-family:var(--mono);font-size:11px;letter-spacing:.14em;font-weight:700;color:var(--red)}
+.col h3{font-family:var(--serif);font-size:22px;margin:8px 0 10px}
+.col ul{list-style:none;font-size:14px;color:var(--mut)}
+.col li{padding:7px 0 7px 24px;border-top:1px dotted var(--line);position:relative}
+.col li::before{content:"✓";position:absolute;left:2px;color:var(--green);font-weight:700}
+.glyph{width:40px;height:40px;border:var(--bd);border-radius:10px;background:var(--paper);display:flex;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:2px 2px 0 var(--ink)}
+.glyph svg{width:21px;height:21px;stroke:var(--red);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* board */
+.board{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.panel{border:var(--bd);border-radius:var(--r);padding:26px 24px;background:var(--card);box-shadow:var(--hard)}
+.panel.dark{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.panel.dark p{color:color-mix(in srgb,var(--paper) 75%,transparent)}
+.panel .tag{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;border:1.5px solid currentColor;border-radius:6px;padding:3px 9px}
+.panel h3{font-family:var(--serif);font-size:24px;margin:12px 0 8px}
+.panel p{font-size:14.5px;color:var(--mut)}
+.panel ul{list-style:none;margin-top:12px;font-size:14px}
+.panel li{padding:6px 0;border-top:1px dotted var(--line)}
+/* incident table */
+table.book{width:100%;border-collapse:collapse;font-size:14px;background:var(--card);border:var(--bd);box-shadow:var(--hard);border-radius:var(--r);overflow:hidden}
+.book th,.book td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+.book tr:last-child td{border:0}
+.book th{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;background:var(--ink);color:var(--paper)}
+.book td:first-child{font-weight:800;white-space:nowrap}
+.stamp-ok,.stamp-bad,.stamp-wait{font-family:var(--mono);font-size:11px;font-weight:700;border:1.5px solid;border-radius:5px;padding:2px 8px;white-space:nowrap}
+.stamp-ok{color:var(--green);border-color:var(--green)}.stamp-bad{color:var(--red);border-color:var(--red)}.stamp-wait{color:var(--gold);border-color:var(--gold)}
+.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:16px}
+.metric{border:var(--bd);background:var(--card);border-radius:10px;padding:14px 12px;box-shadow:3px 3px 0 var(--ink)}
+.metric b{font-family:var(--serif);font-size:20px;display:block}
+.metric span{font-family:var(--mono);font-size:10.5px;color:var(--mut)}
+/* price ledger */
+.pricelist{border:var(--bd);background:var(--card);box-shadow:var(--hard);border-radius:var(--r);overflow:hidden}
+.prow{display:grid;grid-template-columns:150px 1fr auto;gap:18px;padding:20px 22px;border-bottom:1px solid var(--line);align-items:center}
+.prow:last-child{border:0}
+.prow.hot{background:color-mix(in srgb,var(--red) 6%,var(--card));border-left:8px solid var(--red)}
+.prow h3{font-family:var(--mono);font-size:13px;letter-spacing:.08em}
+.prow .idr{font-family:var(--serif);font-size:26px;font-weight:900}
+.prow p{font-size:13.5px;color:var(--mut)}
+.prow .go{font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--red)}
+/* form */
+.form{border:var(--bd);background:var(--card);border-radius:16px;padding:34px;max-width:620px;margin:0 auto;box-shadow:var(--hard);position:relative}
+.form::before{content:"FORMULIR PILOT 01-A";position:absolute;top:-14px;left:24px;background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;padding:4px 12px;border-radius:6px}
+.form label{display:block;font-size:13px;font-weight:800;margin:14px 0 6px;font-family:var(--mono)}
+.form input,.form select{width:100%;padding:12px 14px;border-radius:9px;border:var(--bd);background:var(--paper);color:var(--ink);font-size:15px;font-family:var(--sans)}
+.err-summary{display:none;border:2px solid var(--red);border-radius:10px;padding:14px 18px;margin-bottom:8px;font-size:14px}
+.err-summary h2{font-size:16px;font-family:var(--sans);margin-bottom:6px}
+.err-summary a{color:var(--red);font-weight:700}
+.fielderror{display:none;color:var(--red);font-size:13px;font-weight:700;margin-top:5px}
+input[aria-invalid="true"]{border-color:var(--red)}
+.okmsg{display:none;border:2px solid var(--green);color:var(--green);border-radius:10px;padding:13px;margin-top:16px;font-size:14px;font-weight:700}
+details{border:var(--bd);background:var(--card);border-radius:10px;padding:16px 20px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:800;font-size:15px}
+details p{color:var(--mut);font-size:14px;margin-top:8px}
+.cta-final{border:var(--bd);background:var(--ink);color:var(--paper);border-radius:18px;padding:52px 32px;text-align:center;margin:64px 0 0;box-shadow:var(--hard)}
+.cta-final h2{font-size:clamp(30px,4vw,48px)}
+.cta-final p{color:color-mix(in srgb,var(--paper) 75%,transparent);margin:12px auto 24px;max-width:52ch}
+.cta-final .btn{box-shadow:3px 3px 0 rgba(255,255,255,.35)}
+footer{border-top:var(--bd);padding:26px 0;font-size:12.5px;margin-top:56px;background:var(--card);font-family:var(--mono);color:var(--mut)}
+.foot{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s,transform .55s}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:960px){.hero{grid-template-columns:1fr}.cols3,.board{grid-template-columns:1fr}.col:nth-child(2){transform:none}.metrics{grid-template-columns:repeat(2,1fr)}.prow{grid-template-columns:1fr}.links{display:none}.logrow{grid-template-columns:1fr auto}.logrow time{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.ticker div{animation:none}*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Lewati ke isi</a>
+<div class="topbar"><div class="wrap">
+<span>KASIRKU · JAKARTA · IDR · ID/EN</span>
+<span class="live"><span><span class="dot"></span>DAPUR LIVE</span><span id="clock">--:--</span></span>
+</div></div>
+<header class="nav"><div class="wrap nav-in">
+<a class="logo" href="#top" aria-label="KasirKu home"><u>K</u>KasirKu</a>
+<nav class="links" aria-label="Utama">
+<a href="#alur">Alur</a><a href="#peran">Peran</a><a href="#catatan">Catatan</a><a href="#harga">Harga</a><a href="#faq">FAQ</a>
+</nav>
+<div class="nav-right">
+<button class="tbtn" id="themeBtn" type="button">mode: siang</button>
+<a class="btn sm" href="#pilot">Ikut pilot</a>
+</div>
+</div></header>
+
+<main id="main">
+<div class="wrap hero" id="top">
+<div>
+<span class="stamp">PILOT TERBUKA · 5–10 OUTLET · 4 MINGGU</span>
+<h1>Satu struk.<br><em>Dari scan sampai tutup kas.</em></h1>
+<p class="sub">Pelanggan <b>scan → pesan → bayar</b>, tanpa install aplikasi. Kru terima <b>satu tiket</b> di POS + dapur. Pemilik lihat <b>sales, stok, refund per outlet</b> — tanpa komisi marketplace di jalur sendiri.</p>
+<div class="cta-row">
+<a class="btn" href="#pilot">Mulai trial 14 hari</a>
+<a class="btn plain" href="#alur">Lihat cara kerja ↓</a>
+</div>
+<p class="fine">QR DINE-IN · TAKEAWAY · QRIS + TUNAI · TANPA APLIKASI</p>
+<div class="ledgerline">
+<div><b>≤90 dtk</b><span>MEDIAN PESAN</span></div>
+<div><b>&lt;3 dtk</b><span>ORDER → DAPUR P95</span></div>
+<div><b>99,5%</b><span>ORDER SUKSES</span></div>
+<div><b>Rp 0</b><span>KOMISI PLATFORM</span></div>
+</div>
+<p class="note-hand">↳ coba struk di kanan — klik +/−, total &amp; pajak ngikutin rumus PRD.</p>
+</div>
+<div class="mock">
+<div class="tape">✂ STRUK SIMULASI — GUNTING DI SINI</div>
+<div class="ticket" role="group" aria-label="Simulasi struk interaktif">
+<div class="t-head"><span>MEJA A7 · QR SCAN</span><span>DINE-IN</span></div>
+<div id="items"></div>
+<div class="t-tot">
+<div><span>Subtotal</span><span id="tSub">Rp 0</span></div>
+<div><span>Voucher <button class="tbtn" id="vbtn" type="button" style="padding:2px 8px">pakai −10rb</button></span><span id="tDisc">Rp 0</span></div>
+<div><span>Service 5%</span><span id="tSvc">Rp 0</span></div>
+<div><span>Pajak 10%</span><span id="tTax">Rp 0</span></div>
+<div class="grand"><span>TOTAL</span><span id="tTot">Rp 0</span></div>
+</div>
+<div class="t-foot">
+<div>Quote <span id="tQuote">10:00</span> · <span id="tState">belum dikirim</span></div>
+<button class="btn sm" id="sendBtn" type="button" style="margin-top:10px;width:100%">Kirim ke dapur (simulasi)</button>
+<span class="ok" id="sentOk" style="display:none">Terkirim ke dapur ✓ (simulasi — browser return ≠ lunas)</span>
+</div>
+<div class="zig"></div>
+</div>
+<p class="mockcap">Rumus: service 5% dari (subtotal − diskon) · pajak 10% dari (belanja + service). Uang integer rupiah, tanpa float.</p>
+</div>
+</div>
+
+<div class="ticker" aria-hidden="true"><div id="tick">QR DINE-IN ✦ TAKEAWAY ✦ PICKUP ✦ QRIS ✦ TUNAI/EDC ✦ SHIFT KAS ✦ KITCHEN DISPLAY ✦ STOK ATOMIK ✦ REFUND TERLACAK ✦ QR DINE-IN ✦ TAKEAWAY ✦ PICKUP ✦ QRIS ✦ TUNAI/EDC ✦ SHIFT KAS ✦ KITCHEN DISPLAY ✦ STOK ATOMIK ✦ REFUND TERLACAK ✦&nbsp;</div></div>
+
+<section id="alur"><div class="wrap">
+<div class="kicker reveal">Alur / log dapur</div>
+<h2 class="reveal">Satu order, lima cap waktu.</h2>
+<p class="lead reveal">Bayar terverifikasi server dulu, baru dapur nyala. Order lunas tapi tak bisa dibuatkan → refund case, bukan diam.</p>
+<div class="log reveal">
+<div class="logrow"><time>12:02:11</time><div><h3>Scan — Meja A7</h3><p>QR statis = identitas meja, bukan izin lihat riwayat. QR mati tak bisa bikin order baru.</p></div><span class="st">SCAN ✓</span></div>
+<div class="logrow"><time>12:03:40</time><div><h3>Bayar — QRIS</h3><p>Server kunci harga + tahan stok atomik. Browser balik ≠ lunas; tunggu callback provider.</p></div><span class="st">BAYAR ✓</span></div>
+<div class="logrow"><time>12:03:42</time><div><h3>Dapur — Stasiun grill</h3><p>Tiket routing per stasiun, timer jalan. Retry tak gandakan tiket; reconnect narik yang ketinggalan.</p></div><span class="st">MASAK …</span></div>
+<div class="logrow"><time>12:11:05</time><div><h3>Saji — pramusaji</h3><p>Dine-in selesai oleh staf, bukan oleh tracking pelanggan. Pay-later: saldo meja lunas saat tutup.</p></div><span class="st">SAJI ✓</span></div>
+<div class="logrow"><time>21:30:00</time><div><h3>Tutup — Shift B</h3><p>Kas dihitung vs ekspektasi. Selisih di atas ambang → review manajer + jejak audit.</p></div><span class="st">KLOP ✓</span></div>
+</div>
+</div></section>
+
+<section id="peran"><div class="wrap">
+<div class="kicker reveal">Peran / tiga sisi buku</div>
+<h2 class="reveal">Tiga meja, satu buku yang sama.</h2>
+<p class="lead reveal">Satu produk, satu model data — layar beda per tugas.</p>
+<div class="cols3">
+<div class="col reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h7v7h-7z"/></svg></div><span class="who">01 · PELANGGAN</span><h3>Scan, pesan, lacak.</h3><ul><li>Menu akurat + harga penuh sebelum bayar</li><li>Guest checkout, tanpa daftar wajib</li><li>Link tracking privat + struk HP</li><li>ID default, EN bila tersedia</li></ul></div>
+<div class="col reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h14v12H5zM8 20h8M9 16h6"/></svg></div><span class="who">02 · KRU</span><h3>Terima sekali, sajikan cepat.</h3><ul><li>Order web + POS satu antrean</li><li>Tiket dapur per stasiun + overdue</li><li>Kas, shift, dan struk tercetak</li><li>Tombol besar, status jelas saat ramai</li></ul></div>
+<div class="col reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></div><span class="who">03 · PEMILIK</span><h3>Semua outlet kelihatan.</h3><ul><li>Publish menu, pause outlet, atur pajak</li><li>Sales, tender, refund per hari-bisnis</li><li>Antrean eksepsi tak bisa terlewat</li><li>Peran per outlet, bukan tebak-tebakan</li></ul></div>
+</div>
+</div></section>
+
+<section id="mode"><div class="wrap">
+<div class="kicker reveal">Mode layanan / papan</div>
+<h2 class="reveal">Jujur soal scope: kini vs nanti.</h2>
+<p class="lead reveal">Pilot = satu siklus servis nyata. Yang belum siap tak dijual.</p>
+<div class="board">
+<div class="panel reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7zM9 8V6a3 3 0 0 1 6 0v2"/></svg></div><span class="tag">PILOT · KINI</span><h3>QR dine-in + takeaway</h3><p>Payment-first default; pay-later opsional per meja dengan settlement staf. Order belum bayar tak pernah jadi tiket produksi.</p><ul><li>QR revocable per meja + sesi privat</li><li>Slot pickup langsung, ID ambil wajib</li><li>Kas + 1 provider (QRIS dulu)</li></ul></div>
+<div class="panel dark reveal"><div class="glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17h6l3-8h4"/></svg></div><span class="tag">RILIS PENUH · NANTI</span><h3>Delivery + reservasi + loyalty</h3><p>Kuartal berikut setelah P0 stabil. Alamat tervalidasi, fee dikunci sebelum bayar; kitchen-ready ≠ delivered.</p><ul><li>Slot terjadwal + kapasitas terkunci</li><li>Poin, voucher, segmen terverifikasi</li><li>Resep, purchasing, split bill</li></ul></div>
+</div>
+</div></section>
+
+<section id="catatan"><div class="wrap">
+<div class="kicker reveal">Kebenaran / buku insiden</div>
+<h2 class="reveal">Kebenaran dulu, klaim belakangan.</h2>
+<p class="lead reveal">Target pilot, bukan janji. Tiap baris punya acceptance test. Order lunas yang kedaluwarsa muncul sebagai eksepsi — tak pernah hangus diam-diam.</p>
+<table class="book reveal">
+<tr><th scope="col">Jaminan</th><th scope="col">Perilaku</th><th scope="col">Cap</th></tr>
+<tr><td>Tanpa order ganda</td><td>Idempotency key — retry habis timeout kembali ke order yang sama.</td><td><span class="stamp-ok">AMAN</span></td></tr>
+<tr><td>Tanpa tiket palsu</td><td>Browser return ≠ lunas. Dapur nyala hanya atas callback terverifikasi.</td><td><span class="stamp-ok">AMAN</span></td></tr>
+<tr><td>Tanpa oversell</td><td>Rebutan item terakhir: tepat satu reservasi menang; sisanya lihat koreksi jelas.</td><td><span class="stamp-ok">AMAN</span></td></tr>
+<tr><td>Tanpa uang hilang diam</td><td>Telat, ganda, gagal → antrean eksepsi + pemilik + riwayat.</td><td><span class="stamp-wait">AWASI</span></td></tr>
+<tr><td>Tanpa bocor tenant</td><td>Semua record terikat tenant; ID obok-obok → kosong.</td><td><span class="stamp-ok">AMAN</span></td></tr>
+<tr><td>Tanpa riwayat hilang</td><td>Snapshot harga/resep disimpan; refund putar uang, bukan makanan termakan.</td><td><span class="stamp-ok">AMAN</span></td></tr>
+</table>
+<div class="metrics">
+<div class="metric reveal"><b>80%</b><span>AKTIVASI 7 HARI</span></div>
+<div class="metric reveal"><b>60%</b><span>CHECKOUT SELESAI</span></div>
+<div class="metric reveal"><b>0</b><span>GANDA TAK SELESAI</span></div>
+<div class="metric reveal"><b>70%</b><span>OUTLET HARIAN</span></div>
+<div class="metric reveal"><b>0</b><span>VARIANSI KAS</span></div>
+<div class="metric reveal"><b>≥4,0</b><span>PUAS / 5</span></div>
+</div>
+</div></section>
+
+<section id="harga"><div class="wrap">
+<div class="kicker reveal">Harga / daftar</div>
+<h2 class="reveal">Per outlet, tanpa komisi.</h2>
+<p class="lead reveal">Harga test — divalidasi saat pilot. Fee gateway, pesan, kurir terpisah. Omzet tetap milik resto.</p>
+<div class="pricelist reveal">
+<div class="prow hot"><div><h3>CORE · PILOT</h3><div class="idr">Rp 299rb</div><p>/outlet/bln</p></div><p>QR order, POS, dapur · kuantitas menu + sold-out · kas + 1 provider · laporan dasar.</p><a class="go" href="#pilot">Ikut pilot →</a></div>
+<div class="prow"><div><h3>OPERATIONS</h3><div class="idr">Rp 599rb</div><p>/outlet/bln · penuh</p></div><p>Semua Core + bahan, resep, purchasing · variansi stok + COGS · split bill, pindah meja.</p><a class="go" href="#pilot">Reservasi →</a></div>
+<div class="prow"><div><h3>GROWTH</h3><div class="idr">Rp 899rb</div><p>/outlet/bln · penuh</p></div><p>Semua Operations + loyalty, voucher, promo · reservasi + delivery · segmen + banding outlet.</p><a class="go" href="#pilot">Reservasi →</a></div>
+<div class="prow"><div><h3>ENTERPRISE</h3><div class="idr">Custom</div><p>quote discovery</p></div><p>Limit kontrak + API · central kitchen, transfer · SLA dinego · onboarding + training.</p><a class="go" href="#pilot">Ngobrol →</a></div>
+</div>
+<p class="fine reveal" style="margin-top:14px">Trial 14 hari · grace 7 hari · baca/ekspor 30 hari pasca-suspensi. Downgrade simpan record. Suspensi tak blokir refund order accepted.</p>
+</div></section>
+
+<section id="pilot"><div class="wrap">
+<div class="kicker reveal" style="text-align:center">Pilot / formulir</div>
+<h2 class="reveal" style="text-align:center">4 minggu, order beneran.</h2>
+<p class="lead reveal" style="text-align:center;margin-inline:auto">Onboarding dipandu, impor menu, file cetak QR, training kru, support jam dagang.</p>
+<div class="form reveal">
+<div class="err-summary" id="errSummary" role="alert" tabindex="-1" aria-labelledby="errTitle">
+<h2 id="errTitle">Ada yang kurang</h2>
+<ul id="errList" style="margin-left:18px"></ul>
+</div>
+<form id="pilotForm" novalidate>
+<label for="name">NAMA KAMU</label>
+<input id="name" name="name" required autocomplete="name" placeholder="Sinta" aria-describedby="name-error">
+<p class="fielderror" id="name-error">Isi nama kamu</p>
+<label for="resto">NAMA RESTO</label>
+<input id="resto" name="resto" required placeholder="Warung Sinta" aria-describedby="resto-error">
+<p class="fielderror" id="resto-error">Isi nama resto</p>
+<label for="outlets">JUMLAH OUTLET</label>
+<select id="outlets" name="outlets"><option>1 outlet</option><option>2–5 outlet</option><option>6–20 outlet</option><option>20+ outlet</option></select>
+<label for="wa">WHATSAPP</label>
+<input id="wa" name="wa" required inputmode="tel" placeholder="0812…" aria-describedby="wa-error">
+<p class="fielderror" id="wa-error">No WA 9–16 digit angka</p>
+<button class="btn" type="submit" style="width:100%;margin-top:22px">Minta slot pilot</button>
+<div class="okmsg" id="okMsg" role="status">Tercatat (front-end saja). Backend belum disambung — dibalas 1 hari kerja usai gateway tersambung. <!-- ponytail: POST /api/pilot-requests when backend exists --></div>
+</form>
+</div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+<div class="kicker reveal">FAQ / singkat</div>
+<h2 class="reveal">Jawaban pendek.</h2>
+<div style="max-width:760px;margin-top:20px">
+<details class="reveal"><summary>Pelanggan install aplikasi?</summary><p>Tidak. Kamera HP scan QR → situs mobile bermerek. Daftar loyalty opsional belakangan, verifikasi no HP.</p></details>
+<details class="reveal"><summary>Pembayaran apa saat pilot?</summary><p>QRIS dulu via satu provider resmi, plus tunai/EDC yang dicatat kru. E-wallet &amp; VA lain setelah aktivasi.</p></details>
+<details class="reveal"><summary>Internet putus saat ramai?</summary><p>Online-first: staf lihat status offline jelas, tanpa sukses palsu. Fallback manual terdokumentasi; supervisor input transaksi manual berlabel.</p></details>
+<details class="reveal"><summary>Butuh hardware apa?</summary><p>Order: Android/iOS modern apa pun. Kasir: tablet/laptop + printer struk yang didukung (daftar saat pilot). Fallback cetak browser.</p></details>
+<details class="reveal"><summary>KasirKu ambil komisi per order?</summary><p>Tidak ada komisi platform di jalur sendiri. Langganan + biaya provider/pesan/kurir berlaku, tertulis terpisah.</p></details>
+<details class="reveal"><summary>Jam support?</summary><p>Jam staf mengikuti jam dagang outlet pilot. Tanpa klaim 24/7 tanpa kapasitas.</p></details>
+</div>
+</div></section>
+
+<div class="wrap"><div class="cta-final reveal">
+<h2>Punya jalur order sendiri.</h2>
+<p>Terbitkan menu minggu ini. Terima order beneran dalam 7 hari — atau beri tahu di mana onboarding gagal.</p>
+<a class="btn" href="#pilot">Mulai trial 14 hari</a>
+</div></div>
+</main>
+
+<footer><div class="wrap foot">
+<span><b>KasirKu</b> — kasir + order + dapur + stok.</span>
+<span>Indonesia · IDR · Pilot 2026</span>
+</div></footer>
+
+<script>
+var root=document.documentElement,tb=document.getElementById('themeBtn');
+function setT(t){root.setAttribute('data-theme',t);tb.textContent=t==='dark'?'mode: malam':'mode: siang';try{localStorage.setItem('kk-theme',t)}catch(e){}}
+tb.addEventListener('click',function(){setT(root.getAttribute('data-theme')==='dark'?'light':'dark')});
+try{var s=localStorage.getItem('kk-theme');if(s)setT(s);else if(matchMedia('(prefers-color-scheme: dark)').matches)setT('dark')}catch(e){}
+/* clock */
+function tickClock(){var d=new Date(),p=function(n){return(n<10?'0':'')+n};var el=document.getElementById('clock');if(el)el.textContent=p(d.getHours())+':'+p(d.getMinutes())+':'+p(d.getSeconds())}
+tickClock();setInterval(tickClock,1000);
+/* receipt simulator: integer IDR, service 5% of net, tax 10% of net+service */
+var menu=[{n:'Ayam Goreng',d:'+ sambal ijo',p:22000,q:2},{n:'Es Teh',d:'extra es',p:8000,q:2},{n:'Rendang',d:'+ nasi',p:28000,q:0},{n:'Kopi Tubruk',d:'panas',p:12000,q:0}];
+var discOn=false,left=600,iv=null;
+var fmt=function(n){return 'Rp '+n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.')};
+function render(){var box=document.getElementById('items');box.innerHTML='';menu.forEach(function(m,i){var r=document.createElement('div');r.className='t-row';
+var a=document.createElement('span');a.innerHTML='<b></b><small></small>';a.querySelector('b').textContent=m.n+' × '+m.q;a.querySelector('small').textContent=m.d+' · '+fmt(m.p);
+var s=document.createElement('div');s.className='stepper';s.innerHTML='<button type="button" aria-label="kurang">−</button><span></span><button type="button" aria-label="tambah">+</button>';
+s.children[0].addEventListener('click',function(){if(menu[i].q>0){menu[i].q--;poke()}});
+s.children[2].addEventListener('click',function(){if(menu[i].q<20){menu[i].q++;poke()}});
+r.appendChild(a);r.appendChild(s);box.appendChild(r)});
+calc()}
+function calc(){var sub=menu.reduce(function(a,m){return a+m.p*m.q},0);var disc=discOn?Math.min(10000,sub):0;var net=sub-disc;
+var svc=Math.round(net*5/100);var tax=Math.round((net+svc)*10/100);var tot=net+svc+tax;
+document.getElementById('tSub').textContent=fmt(sub);document.getElementById('tDisc').textContent='−'+fmt(disc);
+document.getElementById('tSvc').textContent=fmt(svc);document.getElementById('tTax').textContent=fmt(tax);document.getElementById('tTot').textContent=fmt(tot)}
+function poke(){left=600;document.getElementById('sentOk').style.display='none';document.getElementById('tState').textContent='belum dikirim';render();startQ()}
+function fmtQ(s){var m=Math.floor(s/60),r=s%60;return (m<10?'0':'')+m+':'+(r<10?'0':'')+r}
+function startQ(){if(iv)clearInterval(iv);iv=setInterval(function(){left--;if(left<=0){clearInterval(iv);document.getElementById('tQuote').textContent='HABIS';document.getElementById('tQuote').className='expired';document.getElementById('tState').textContent='quote kedaluwarsa — ubah qty untuk hitung ulang';return}document.getElementById('tQuote').textContent=fmtQ(left)},1000)}
+document.getElementById('vbtn').addEventListener('click',function(){discOn=!discOn;this.textContent=discOn?'batalkan':'pakai −10rb';poke()});
+document.getElementById('sendBtn').addEventListener('click',function(){if(left<=0){poke();return}document.getElementById('tState').textContent='diterima · antrean dapur';document.getElementById('sentOk').style.display='inline-block'});
+render();startQ();
+/* form: error summary + inline, focus to summary */
+var form=document.getElementById('pilotForm'),sum=document.getElementById('errSummary'),list=document.getElementById('errList');
+function setErr(id,eid,bad){var f=document.getElementById(id),e=document.getElementById(eid);f.setAttribute('aria-invalid',bad?'true':'false');e.style.display=bad?'block':'none';return bad?{f:f,msg:e.textContent,href:'#'+id}:null}
+form.addEventListener('submit',function(e){e.preventDefault();list.innerHTML='';var errs=[];
+errs.push(setErr('name','name-error',!document.getElementById('name').value.trim()));
+errs.push(setErr('resto','resto-error',!document.getElementById('resto').value.trim()));
+errs.push(setErr('wa','wa-error',!/^[0-9+ ]{9,16}$/.test(document.getElementById('wa').value.trim())));
+errs=errs.filter(Boolean);
+if(errs.length){sum.style.display='block';errs.forEach(function(x){var li=document.createElement('li');var a=document.createElement('a');a.href=x.href;a.textContent=x.msg;li.appendChild(a);list.appendChild(li)});sum.focus();document.getElementById('okMsg').style.display='none';return}
+sum.style.display='none';var ok=document.getElementById('okMsg');ok.style.display='block';form.querySelector('button[type=submit]').textContent='Slot diminta ✓'});
+/* reveal */
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!reduce&&'IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.12});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})}
+else{document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')})}
+</script>
+</body>
+</html>
